@@ -8,33 +8,33 @@ A high-performance, real-time backend service for managing atomic auctions and l
 
 This project follows **Clean Architecture** principles to separate business logic from transport layers.
 
--   **Domain-Driven**: Logic resides in Services, isolated from Controllers.
--   **Real-time Scaling**: Utilizes Redis Adapter for Socket.io to support horizontal scaling of WebSocket servers.
--   **Task Management**: Asynchronous auction completion handling via RabbitMQ.
+- **Domain-Driven**: Logic resides in Services, isolated from Controllers.
+- **Real-time Scaling**: Utilizes Redis Adapter for Socket.io to support horizontal scaling of WebSocket servers.
+- **Task Management**: Asynchronous auction completion handling via RabbitMQ.
 
 ## Tech Stack
 
--   **Framework**: NestJS 11
--   **Language**: TypeScript (Strict)
--   **Database**: PostgreSQL 17 (with `pgvector`)
--   **ORM**: Prisma 7
--   **Message Queue**: RabbitMQ
--   **Caching / PubSub**: Redis
--   **Containerization**: Docker & Docker Compose
+- **Framework**: NestJS 11
+- **Language**: TypeScript (Strict)
+- **Database**: PostgreSQL 17 (with `pgvector`)
+- **ORM**: Prisma 7
+- **Message Queue**: RabbitMQ
+- **Caching / PubSub**: Redis
+- **Containerization**: Docker & Docker Compose
 
 ## Key Engineering Solutions
 
--   **Atomic Bidding**: Utilizes `prisma.$transaction` and database locks to ensure bid integrity and prevent race conditions.
--   **Vector Search**: Integrated `pgvector` for future-proofing semantic search capabilities on auction items.
--   **Lifecycle Automation**: Distributed task scheduling with RabbitMQ to handle auction closures precisely when they expire.
+- **Atomic Bidding**: Utilizes `prisma.$transaction` and database locks to ensure bid integrity and prevent race conditions.
+- **Vector Search**: Integrated `pgvector` for future-proofing semantic search capabilities on auction items.
+- **Lifecycle Automation**: Distributed task scheduling with RabbitMQ to handle auction closures precisely when they expire.
 
 ## Setup
 
 ### Prerequisites
 
--   Docker & Docker Compose
--   Node.js (>= 20)
--   pnpm
+- Docker & Docker Compose
+- Node.js (>= 20)
+- pnpm
 
 ### Installation
 
@@ -74,8 +74,8 @@ docker compose up -d
 
 ## Documentation
 
--   **API Documentation**: Available at `/api/docs` (Swagger) when the server is running.
--   **Project Context**: See `GEMINI.md` for detailed architectural rules and domain logic.
+- **API Documentation**: Available at `/api/docs` (Swagger) when the server is running.
+- **Project Context**: See `GEMINI.md` for detailed architectural rules and domain logic.
 
 ## Project Structure
 

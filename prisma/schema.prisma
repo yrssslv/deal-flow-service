@@ -19,8 +19,10 @@ model User {
   email    String    @unique
   username String    @unique
   password String
+
   bids     Bid[]
   messages Message[]
+  auctions Auction[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -36,6 +38,9 @@ model Auction {
   endTime      DateTime
   embedding    Unsupported("vector(768)")?
 
+  owner     User     @relation(fields: [ownerId], references: [id])
+  ownerId   String
+
   bids     Bid[]
   messages Message[]
 
@@ -43,6 +48,7 @@ model Auction {
   updatedAt DateTime @updatedAt
 
   @@index([status])
+  @@index([ownerId])
 }
 
 model Bid {
