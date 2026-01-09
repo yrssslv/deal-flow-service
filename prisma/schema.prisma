@@ -1,0 +1,71 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  extensions = [pgvector(map: "vector")]
+}
+
+enum AuctionStatus {
+  ACTIVE
+  FINISHED
+  CANCELLED
+}
+
+model User {
+  id       String    @id @default(uuid())
+  email    String    @unique
+  username String    @unique
+  password String
+  bids     Bid[]
+  messages Message[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Auction {
+  id           String        @id @default(uuid())
+  title        String
+  description  String
+  startPrice   Decimal       @db.Decimal(20, 2)
+  currentPrice Decimal       @db.Decimal(20, 2)
+  status       AuctionStatus @default(ACTIVE)
+  endTime      DateTime
+  embedding    Unsupported("vector(768)")?
+
+  bids     Bid[]
+  messages Message[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+}
+
+model Bid {
+  id        String   @id @default(uuid())
+  amount    Decimal  @db.Decimal(20, 2)
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  auction   Auction  @relation(fields: [auctionId], references: [id])
+  auctionId String
+  createdAt DateTime @default(now())
+
+  @@index([auctionId])
+  @@index([userId])
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  text      String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  auction   Auction  @relation(fields: [auctionId], references: [id])
+  auctionId String
+  createdAt DateTime @default(now())
+
+  @@index([auctionId])
+}
